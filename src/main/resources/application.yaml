@@ -1,0 +1,75 @@
+server:
+  servlet:
+    context-path: /spbtemplate
+management:
+  endpoints:
+    enabled-by-default: false
+    web:
+      exposure:
+        include:
+          - info
+          - health
+          - prometheus
+          - metrics
+      base-path: /
+    jmx:
+      exposure:
+        exclude: "*"
+  server:
+    port: 8043
+    servlet:
+      context-path: /spbtemplate
+  endpoint:
+    health:
+      enabled: true
+      show-details: when_authorized
+    info:
+      enabled: true
+    prometheus:
+      enabled: true
+    metrics:
+      enabled: true
+info:
+  app:
+    version: @git.commit.id.abbrev@
+spring:
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    database: mysql
+    hibernate:
+      naming:
+        physical-strategy: github.project.springboottemplate.config.UpperCaseSpringPhysicalNamingStrategy
+  datasource:
+    url: jdbc:mysql://localhost:3306/TEMPLATEDB?useSSL=false&useLegacyDatetimeCode=false
+    username: TEMPLATEDB
+    password: password
+    driver-class-name: com.mysql.jdbc.Driver
+    hikari:
+      data-source-properties:
+        cachePrepStmts: true
+        prepStmtCacheSize: 250
+        prepStmtCacheSqlLimit: 2048
+        useServerPrepStmts: true
+        useLocalSessionState: true
+        rewriteBatchedStatements: true
+        cacheResultSetMetadata: true
+        cacheServerConfiguration: true
+        elideSetAutoCommits: true
+        maintainTimeStats: false
+  liquibase:
+    enabled: true
+    user: LIQUIBASE_TEMPLATEDB
+    password: password
+    change-log: classpath:db/liquibase/master-changelog.xml
+service:
+  swagger:
+    enable: true
+    base-package: @project.groupId@
+    group-name: microservice
+    application-information:
+      title: @project.name@
+      description: @project.description@
+      service-url: service url
+      license: App license
+      license-url: App license url
+      version: @git.commit.id.abbrev@

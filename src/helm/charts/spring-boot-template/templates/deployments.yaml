@@ -1,0 +1,85 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "spbtemplate.fullname" . }}
+  labels:
+    version: {{ .Values.image.tag | quote }}
+    api: {{ .Values.labels.api }}
+    tier: backend
+    heritage: {{ .Release.Service }}
+    chart: {{ template "spbtemplate.chart" . }}
+    app: {{ template "spbtemplate.app" . }}
+    env: {{ .Release.Namespace }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      tier: backend
+      api: {{ .Values.labels.api }}
+  progressDeadlineSeconds: {{ .Values.progressDeadlineSeconds }}
+  template:
+    metadata:
+      labels:
+        version: {{ .Values.image.tag | quote}}
+        api: {{ .Values.labels.api }}
+        tier: backend
+        heritage: {{ .Release.Service }}
+        chart: {{ template "spbtemplate.chart" . }}
+        app: {{ template "spbtemplate.app" . }}
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configMaps.yaml") . | sha256sum }}
+    spec:
+      imagePullSecrets:
+          - name: docker-registry-read
+      containers:
+      - name: {{ template "spbtemplate.name" . }}
+        image: {{ .Values.image.image }}:{{ .Values.image.tag }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        resources:
+{{ toYaml .Values.resources | trim | indent 10 }}
+        env:
+{{ toYaml .Values.env | trim| indent 8 }}
+        livenessProbe:
+            httpGet:
+              path: {{ .Values.livenessProbe.httpGet.path }}
+              port: {{ .Values.livenessProbe.httpGet.port }}
+            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
+            successThreshold: {{ .Values.livenessProbe.successThreshold }}
+            failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
+        readinessProbe:
+            httpGet:
+              path: {{ .Values.readinessProbe.httpGet.path }}
+              port: {{ .Values.readinessProbe.httpGet.port }}
+            initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
+            successThreshold: {{ .Values.readinessProbe.successThreshold }}
+            failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
+        ports:
+        - name: server
+          containerPort: {{ .Values.container.server.port }}
+        - name: management
+          containerPort: {{ .Values.container.management.port }}
+        volumeMounts:
+        - name: config-volume
+          mountPath: /opt/config/
+        - name: secret-volume
+          mountPath: /opt/secret/
+      {{- if .Values.spbTemplateDependencyInstall.enabled}}
+      initContainers:
+      - name: init-db
+        image: busybox:1
+        imagePullPolicy: IfNotPresent
+        command: ['sh', '-c', 'until $(nc -v -z -w 10 {{ .Values.mysql.host }} {{ .Values.mysql.port }}); do echo waiting for Mysql; sleep 2; done;']
+      {{- end }}
+      volumes:
+      - name: config-volume
+        configMap:
+          name: {{ template "spbtemplate.fullname" . }}
+      - name: secret-volume
+        secret:
+          secretName: {{ template "spbtemplate.fullname" . }}

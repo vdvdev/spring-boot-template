@@ -1,0 +1,19 @@
+image:
+  image: registry.com/spring-boot-template/init_branch
+  tag: 66a6f55
+
+spbTemplateDependencyInstall:
+  enabled: true
+
+mysql:
+  mysqlUser: TEMPLATEDB
+  mysqlPassword: password
+  mysqlDatabase: TEMPLATEDB
+  liquibaseUser: TEMPLATEDB
+  liquibasePassword: password
+  host: spring-boot-template-mysql
+
+# ingress configuration
+ingress:
+  host:
+  preview:

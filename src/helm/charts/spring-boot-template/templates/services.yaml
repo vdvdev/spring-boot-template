@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "spbtemplate.fullname" . }}
+  labels:
+    version: {{ .Values.image.tag | quote }}
+    api: {{ .Values.labels.api }}
+    tier: backend
+    heritage: {{ .Release.Service }}
+    chart: {{ template "spbtemplate.chart" . }}
+    app: {{ template "spbtemplate.app" . }}
+    env: {{ .Release.Namespace }}
+spec:
+  selector:
+    api: {{ .Values.labels.api }}
+    tier: backend
+  ports:
+  - name: http
+    protocol: TCP
+    port: {{ .Values.service.server.port }}
+    targetPort: {{ .Values.service.server.targetPort }}
+  - name: management
+    protocol: TCP
+    port: {{ .Values.service.management.port }}
+    targetPort: {{ .Values.service.management.targetPort }}
+  type: {{ .Values.service.type }}

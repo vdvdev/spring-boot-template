@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FindBugsFilter>
+
+    <!--exclude security violation for all spring controllers-->
+    <Match>
+        <Bug pattern="SPRING_ENDPOINT"/>
+    </Match>
+
+    <!--exclude obligatory @Nullable-->
+    <Match>
+        <Bug pattern="AI_ANNOTATION_ISSUES_NEEDS_NULLABLE"/>
+    </Match>
+
+    <!--exclude potential CRLF Injection for logs-->
+    <Match>
+        <Bug pattern="CRLF_INJECTION_LOGS"/>
+    </Match>
+
+    <!--exclude violations for tests. Assertions are done by rest assured framework-->
+    <Match>
+        <Class name="~.*\.*ControllerTest"/>
+        <Bug pattern="UTAO_JUNIT_ASSERTION_ODDITIES_NO_ASSERT"/>
+    </Match>
+
+    <Match>
+        <Class name="~.*\.*Test"/>
+        <Bug pattern="PRMC_POSSIBLY_REDUNDANT_METHOD_CALLS"/>
+    </Match>
+
+    <!--exclude generated mappers-->
+    <Match>
+        <Class name="~.*\.*MapperImpl"/>
+    </Match>
+
+</FindBugsFilter>

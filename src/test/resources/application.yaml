@@ -1,0 +1,10 @@
+spring:
+  jpa:
+    database: H2
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
+  liquibase:
+    enabled: false
