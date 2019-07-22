@@ -1,0 +1,6 @@
+USER:
+  - ID: "regex:\\d+"
+    UUID: "regex:.+"
+    NAME: "User Name"
+    CREATED: "regex:.+"
+    MODIFIED: "regex:.+"

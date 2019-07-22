@@ -1,0 +1,24 @@
+Thank you for installing {{ template "spbtemplate.fullname" . }}.
+
+Your release is named {{ .Release.Name }}.
+Chart version is {{ .Chart.Version }}
+Version of application is {{ .Values.image.tag }}
+
+To learn more about the release, try:
+
+  $ helm status {{ .Release.Name }}
+  $ helm get {{ .Release.Name }}
+
+{{- if .Values.ingress.host }}
+Service should be available soon on
+    {{- if .Values.ingress.preview }}
+        https://{{ .Values.ingress.host }}/{{ .Release.Namespace }}{{ .Values.ingress.rewrite.target }}
+    {{else}}
+        https://{{ .Values.ingress.host }}{{ .Values.ingress.rewrite.target }}
+    {{- end }}
+{{else}}
+Service on your local environment should be available on:
+    https://localhost/{{ .Release.Namespace }}{{ .Values.ingress.rewrite.target }}
+{{- end }}
+
+Please see instructions how to update the release in the README.md

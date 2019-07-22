@@ -1,0 +1,32 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+    name: {{ template "spbtemplate.fullname" . }}
+    labels:
+        env: {{ .Release.Namespace }}
+    annotations:
+            {{- range $key, $value := .Values.ingress.annotations }}
+            {{ $key }}: {{ $value }}
+        {{- end }}
+spec:
+    rules:
+            {{- if .Values.ingress.host }}
+        - host: {{ .Values.ingress.host }}
+          http:
+              paths:
+                      {{- if .Values.ingress.preview }}
+                  - path: /{{ .Release.Namespace }}{{ .Values.ingress.rewrite.target }}
+                      {{else}}
+                  - path: {{ .Values.ingress.rewrite.target }}
+                          {{- end }}
+                    backend:
+                        serviceName: {{ template "spbtemplate.fullname" . }}
+                        servicePort: {{ .Values.service.server.port }}
+            {{else}}
+        - http:
+              paths:
+                  - path: /{{ .Release.Namespace }}{{ .Values.ingress.rewrite.target }}
+                    backend:
+                        serviceName: {{ template "spbtemplate.fullname" . }}
+                        servicePort: {{ .Values.service.server.port }}
+        {{- end }}

@@ -1,0 +1,109 @@
+#whatever install database or not
+spbTemplateDependencyInstall:
+  enabled: false
+
+# labels
+labels:
+  api: spbtemplate
+
+# settings for the docker image registry
+image:
+  image: registry.com/spring-boot-template
+  tag: 0.0.0
+  pullPolicy: IfNotPresent
+
+# how many instances to run
+replicaCount: 1
+# number of seconds the Deployment controller waits before indicating (in the Deployment status) that the Deployment progress has stalled
+progressDeadlineSeconds: 360
+# resources for the deployment
+resources:
+  requests:
+    memory: "300Mi"
+  limits:
+    memory: "512Mi"
+
+# environment variables for the pods in deployment
+env:
+- name: JAVA_OPTS
+  value: -Xmx512m
+
+# healthcheck of the pod in deployment
+livenessProbe:
+  httpGet:
+    path: /spbtemplate/health
+    port: 8043
+  initialDelaySeconds: 210
+  periodSeconds: 15
+  timeoutSeconds: 5
+  successThreshold: 1
+  failureThreshold: 3
+
+# readiness check (pod ready to receive traffic) of the pod in deployment
+readinessProbe:
+  httpGet:
+    path: /spbtemplate/health
+    port: 8043
+  initialDelaySeconds: 45
+  periodSeconds: 15
+  timeoutSeconds: 5
+  successThreshold: 2
+  failureThreshold: 3
+
+# container configuration
+container:
+  server:
+    port: 8080
+  management:
+    port: 8043
+
+# service configuration
+service:
+  server:
+    port: 8080
+    targetPort: 8080
+  management:
+    port: 8043
+    targetPort: 8043
+  type: ClusterIP
+
+# ingress configuration
+ingress:
+  rewrite:
+    target: &rewrite_target /spbtemplate
+  host:
+  preview:
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: *rewrite_target
+
+# application.yaml config values
+config:
+  management:
+    security:
+      enabled: false
+
+# Sent to MySQL chart
+mysql:
+  mysqlUser: TEMPLATEDB
+  mysqlPassword: password
+  mysqlDatabase: TEMPLATEDB
+  persistence:
+    enabled: true
+    size: 300M
+    accessMode: ReadWriteOnce
+  metrics.enabled: false
+  metrics.image: prom/mysqld-exporter
+  metrics.imageTag: v0.10.0
+  ssl:
+    enabled: false
+  useLegacyDatetimeCode:
+    enabled: false
+  liquibaseUser: LIQUIBASE_TEMPLATEDB
+  liquibasePassword: password
+  host: mysql
+  port: 3306
+  configurationFiles:
+    mysql.cnf: |-
+      [mysqld]
+      character-set-server=utf8mb4
+      collation-server=utf8mb4_unicode_ci

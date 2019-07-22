@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "spbtemplate.fullname" . }}
+  labels:
+    version: {{ .Values.image.tag | quote }}
+    api: {{ .Values.labels.api }}
+    tier: backend
+    heritage: {{ .Release.Service }}
+    chart: {{ template "spbtemplate.chart" . }}
+    app: {{ template "spbtemplate.app" . }}
+    env: {{ .Release.Namespace }}
+data:
+  config.yaml: |
+  {{- include "spbtemplate.configData" . | indent 4}}

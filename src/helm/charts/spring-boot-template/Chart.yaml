@@ -1,0 +1,14 @@
+apiVersion: "v1"
+name: spring-boot-template
+version: 1.0.2
+kubeVersion: ">=1.9.0"
+description: "'spring-boot-template' Helm chart for Kubernetes"
+keywords:
+  - spbtemplate
+  - kubernetes
+  - helm
+  - api
+  - java
+  - spring-boot20
+engine: gotpl # The name of the spbtemplate engine (optional, defaults to gotpl)
+tillerVersion: ">2.0.0"

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Properties>
+        <Property name="Service">@project.name@</Property>
+        <Property name="version">@git.commit.id.abbrev@</Property>
+        <Property name="LOG_PATTERN">
+            ${Service} ${version} %d{yyyy-MM-dd HH:mm:ss.SSS} %clr{%5p} %clr{${sys:PID}}{magenta} %clr{---}{faint} %clr{[%15.15t]}{faint} %clr{%-40.40c{1.}}{cyan} %clr{:}{faint} %m%n%xwEx
+        </Property>
+    </Properties>
+    <Appenders>
+        <Console name="console-appender">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <AsyncRoot level="info">
+            <AppenderRef ref="console-appender"/>
+        </AsyncRoot>
+    </Loggers>
+</Configuration>

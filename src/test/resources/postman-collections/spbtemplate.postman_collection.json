@@ -1,0 +1,149 @@
+{
+	"info": {
+		"_postman_id": "3fbf05dd-4311-4392-9377-8b7b70ddc34d",
+		"name": "spbtemplate",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Swagger",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3b3269df-6ab2-435e-9117-2d4ebfd28f35",
+						"exec": [
+							"pm.test(\"200 status\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/spbtemplate/swagger-ui.html",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"spbtemplate",
+						"swagger-ui.html"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "92ef7155-c1c1-4ba1-adf7-4bc1653f56b5",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"UUID exists\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property(\"uuid\");",
+							"    pm.environment.set(\"uuid\", jsonData.uuid);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"new User\"\r\n}"
+				},
+				"url": {
+					"raw": "{{host}}/spbtemplate/v1/user",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"spbtemplate",
+						"v1",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve webuser by cookie_uuid",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "92ef7155-c1c1-4ba1-adf7-4bc1653f56b5",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Check response body\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property(\"uuid\");",
+							"    pm.expect(jsonData).to.have.property(\"name\");",
+							"    pm.expect(jsonData.cookie_uuid).is.equal(pm.environment.get(\"uuid\"));",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/spbtemplate/v1/user/{{uuid}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"spbtemplate",
+						"v1",
+						"user",
+						"{{uuid}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,27 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd"
+                   objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+
+    <changeSet author="developer" id="00000000000001-1">
+        <createTable tableName="USER">
+            <column name="ID" type="INT(20)" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="UUID" type="CHAR(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="NAME" type="CHAR(45)"/>
+            <column name="CREATED" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MODIFIED" type="DATETIME"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="developer" id="00000000000001-2">
+        <addUniqueConstraint tableName="USER" columnNames="UUID" constraintName="USER_UNIQUE_UUID"/>
+    </changeSet>
+
+</databaseChangeLog>
