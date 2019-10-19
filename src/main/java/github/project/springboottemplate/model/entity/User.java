@@ -43,7 +43,7 @@ public class User implements UuidIdentifiable {
     private String name;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    List<Book> bookList;
+    private List<Book> bookList;
 
     @CreatedDate
     @Column(updatable = false)
