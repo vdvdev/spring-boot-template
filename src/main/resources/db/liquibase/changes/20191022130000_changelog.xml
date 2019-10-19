@@ -9,17 +9,12 @@
             <column name="ID" type="INT(20)" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="UUID" type="CHAR(36)">
-                <constraints nullable="false"/>
-            </column>
             <column name="USER_ID" type="INT(20)">
                 <constraints nullable="false"/>
             </column>
-            <column name="NAME" type="CHAR(45)"/>
             <column name="CREATED" type="DATETIME">
                 <constraints nullable="false"/>
             </column>
-            <column name="MODIFIED" type="DATETIME"/>
         </createTable>
     </changeSet>
 

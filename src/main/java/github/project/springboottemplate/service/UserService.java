@@ -43,7 +43,12 @@ public class UserService {
 
   public void createNewUserBook() {
 
-    final var user = User.builder().bookList(List.of(Book.builder().build())).build();
+    final var user = User.builder().bookList(
+            List.of(
+                    Book.builder().build(),
+                    Book.builder().build(),
+                    Book.builder().build()))
+            .build();
 
     user.getBookList().forEach(b -> b.setUser(user));
 
