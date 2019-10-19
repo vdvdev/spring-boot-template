@@ -32,6 +32,17 @@ management:
 info:
   app:
     version: @git.commit.id.abbrev@
+logging:
+  level:
+    org:
+      hibernate:
+        SQL:
+          TRACE
+        type:
+          descriptor:
+            sql:
+              BasicBinder:
+                TRACE
 spring:
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect

@@ -1,6 +1,6 @@
 image:
-  image: registry.com/spring-boot-template/init_branch
-  tag: 66a6f55
+  image: registry.com/spring-boot-template/master
+  tag: dd63338
 
 spbTemplateDependencyInstall:
   enabled: true

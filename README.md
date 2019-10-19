@@ -28,6 +28,9 @@ docker build -t registry.com/spring-boot-template/init_branch:{{git.version}} .
 or
 mvn compile jib:dockerBuild
 
+after installing helm & k8
+helm init
+
 helm install stable/nginx-ingress --name my-nginx --namespace nginx-ingress
 
 To run helm charts from Core Platform projects corresponding secret should be created to access Nexus docker registry (secret name is the same for all projects):
@@ -36,6 +39,8 @@ kubectl create secret docker-registry docker-registry-read --docker-server=regis
 kubectl delete -f https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard.yaml
 kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard.yaml
 kubectl proxy
+kubectl -n kube-system get secret |grep  kubernetes-dashboard-token |cut -f1 -d ' ' |  xargs kubectl -n kube-system describe  secret
+or
 kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep admin-user | awk '{print $1}')
 http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/
 

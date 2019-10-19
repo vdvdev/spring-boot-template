@@ -1,0 +1,38 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd"
+                   objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+
+    <changeSet author="developer" id="00000000000002-1">
+        <createTable tableName="BOOK">
+            <column name="ID" type="INT(20)" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="UUID" type="CHAR(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="USER_ID" type="INT(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="NAME" type="CHAR(45)"/>
+            <column name="CREATED" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MODIFIED" type="DATETIME"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="developer" id="00000000000002-2">
+        <addUniqueConstraint tableName="BOOK" columnNames="UUID" constraintName="BOOK_UNIQUE_UUID"/>
+    </changeSet>
+
+    <changeSet author="developer" id="00000000000002-3">
+        <addForeignKeyConstraint baseColumnNames="USER_ID"
+                                 baseTableName="BOOK"
+                                 constraintName="user_id_cons"
+                                 referencedColumnNames="ID"
+                                 referencedTableName="USER"/>
+    </changeSet>
+
+</databaseChangeLog>

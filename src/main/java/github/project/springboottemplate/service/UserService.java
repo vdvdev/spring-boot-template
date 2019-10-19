@@ -4,8 +4,11 @@ import github.project.springboottemplate.mapper.UserMapper;
 import github.project.springboottemplate.model.dto.UserCreationDtoRequest;
 import github.project.springboottemplate.model.dto.UserCreationDtoResponse;
 import github.project.springboottemplate.model.dto.UserResponseDto;
+import github.project.springboottemplate.model.entity.Book;
 import github.project.springboottemplate.model.entity.User;
 import github.project.springboottemplate.repository.UserRepository;
+
+import java.util.List;
 import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +39,15 @@ public class UserService {
     final var user = findUserByUuid(uuid);
 
     return userMapper.mapToUserResponseDto(user);
+  }
+
+  public void createNewUserBook() {
+
+    final var user = User.builder().bookList(List.of(Book.builder().build())).build();
+
+    user.getBookList().forEach(b -> b.setUser(user));
+
+    var user1 = userRepository.save(user);
   }
 
 

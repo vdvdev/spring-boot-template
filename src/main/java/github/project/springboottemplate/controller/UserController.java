@@ -42,4 +42,13 @@ public class UserController {
 
     return userService.findByUuid(uuid);
   }
+
+  @PostMapping("/v1/user/new")
+  @ResponseStatus(HttpStatus.OK)
+  public void createNew() {
+
+    log.info("Create new book/user");
+
+    userService.createNewUserBook();
+  }
 }
