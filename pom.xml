@@ -43,6 +43,7 @@
         <docker.args.spring.config>-Dspring.config.additional-location=file:/opt/config/config.yaml,file:/opt/secret/secret.yaml</docker.args.spring.config>
         <disruptor.version>3.4.2</disruptor.version>
         <rider-spring.version>1.5.3</rider-spring.version>
+        <datasource-proxy.version>1.4.9</datasource-proxy.version>
     </properties>
 
     <dependencies>
@@ -147,6 +148,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.ttddyy</groupId>
+            <artifactId>datasource-proxy</artifactId>
+            <version>${datasource-proxy.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>

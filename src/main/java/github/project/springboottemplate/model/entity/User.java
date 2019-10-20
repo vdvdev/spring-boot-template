@@ -24,11 +24,10 @@ import java.util.UUID;
 @EntityListeners({AuditingEntityListener.class, UuidEntityListener.class})
 public class User implements UuidIdentifiable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Integer id;
 
+    @Id
     @Column(columnDefinition = "CHAR(36)",
             name = "UUID",
             nullable = false,
@@ -42,7 +41,7 @@ public class User implements UuidIdentifiable {
             name = "NAME")
     private String name;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Book> bookList;
 
     @CreatedDate

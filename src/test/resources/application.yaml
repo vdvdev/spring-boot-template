@@ -1,10 +1,27 @@
+logging:
+  level:
+    org:
+      hibernate:
+        SQL:
+          TRACE
+        type:
+          descriptor:
+            sql:
+              BasicBinder:
+                TRACE
 spring:
   jpa:
     database: H2
-    show-sql: false
+#    show-sql: true
     properties:
       hibernate:
-        format_sql: true
-        use_sql_comments: true
+        generate_statistics: true
+#        batch_versioned_data: true
+#        order_inserts: true
+        jdbc:
+          batch_size: 5
+#          fetch_size: 5
+#        format_sql: true
+#        use_sql_comments: true
   liquibase:
     enabled: false

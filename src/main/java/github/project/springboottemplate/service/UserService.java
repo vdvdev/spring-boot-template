@@ -7,15 +7,15 @@ import github.project.springboottemplate.model.dto.UserResponseDto;
 import github.project.springboottemplate.model.entity.Book;
 import github.project.springboottemplate.model.entity.User;
 import github.project.springboottemplate.repository.UserRepository;
-
-import java.util.List;
-import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -43,16 +43,31 @@ public class UserService {
 
   public void createNewUserBook() {
 
-    final var user = User.builder().bookList(
+//    final var user1 = User.builder().bookList(
+//            List.of(
+//                    Book.builder().build(),
+//                    Book.builder().build()))
+//            .build();
+//
+//    final var user2 = User.builder().bookList(
+//            List.of(
+//                    Book.builder().build(),
+//                    Book.builder().build()))
+//            .build();
+//
+//    user1.getBookList().forEach(b -> b.setUser(user1));
+//    user2.getBookList().forEach(b -> b.setUser(user2));
+
+//    userRepository.saveAll(List.of(user1, user2));
+
+    userRepository.saveAll(
             List.of(
-                    Book.builder().build(),
-                    Book.builder().build(),
-                    Book.builder().build()))
-            .build();
-
-    user.getBookList().forEach(b -> b.setUser(user));
-
-    var user1 = userRepository.save(user);
+                    User.builder().build(),
+                    User.builder().build(),
+                    User.builder().build(),
+                    User.builder().build(),
+                    User.builder().build(),
+                    User.builder().build()));
   }
 
 

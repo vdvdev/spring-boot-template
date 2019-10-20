@@ -13,7 +13,7 @@ FLUSH PRIVILEGES;
 ```
 
 ###Docker
-docker run --name demo-mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=password -d mysql:5.7
+docker run --name demo-mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -d mysql:5.7
 docker exec -i -t demo-mysql /bin/sh
 docker rmi $(docker images | grep 'startnames')
 

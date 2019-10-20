@@ -6,7 +6,7 @@
 
     <changeSet author="developer" id="00000000000002-1">
         <createTable tableName="BOOK">
-            <column name="ID" type="INT(20)" autoIncrement="true">
+            <column name="UUID" type="CHAR(36)">
                 <constraints primaryKey="true"/>
             </column>
             <column name="USER_ID" type="INT(20)">
@@ -19,10 +19,6 @@
     </changeSet>
 
     <changeSet author="developer" id="00000000000002-2">
-        <addUniqueConstraint tableName="BOOK" columnNames="UUID" constraintName="BOOK_UNIQUE_UUID"/>
-    </changeSet>
-
-    <changeSet author="developer" id="00000000000002-3">
         <addForeignKeyConstraint baseColumnNames="USER_ID"
                                  baseTableName="BOOK"
                                  constraintName="user_id_cons"
