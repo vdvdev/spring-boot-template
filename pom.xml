@@ -27,7 +27,7 @@
         <h2db.version>1.4.199</h2db.version>
         <liquibase.version>3.6.3</liquibase.version>
         <jacoco.maven.plugin.version>0.8.3</jacoco.maven.plugin.version>
-        <checkstyle.latest.version>8.20</checkstyle.latest.version>
+        <checkstyle.latest.version>8.29</checkstyle.latest.version>
         <checkstyle.maven.plugin.version>3.0.0</checkstyle.maven.plugin.version>
         <spotbugs.maven.plugin.version>3.1.11</spotbugs.maven.plugin.version>
         <findsecbug.maven.plugin.version>1.9.0</findsecbug.maven.plugin.version>
