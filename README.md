@@ -43,3 +43,10 @@ kubectl port-forward cp-athena-service-deployment-75489cb9b-s9xw9 9001:8080
 kubectl delete pod cp-gdpr-service-deployment-6cf984cd6f-mxwzk --grace-period=0 --force
 
 helm upgrade -i spring-boot-template src/helm/charts/spring-boot-template/ -f local-values.yaml
+
+###Sonar
+
+docker run -d --name sonarqube -p 9000:9000 sonarqube
+
+mvn sonar:sonar
+
